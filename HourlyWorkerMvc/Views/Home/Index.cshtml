@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Worker Entry Form";
+}
+
+@model HourlyWorkerMvc.Models.HourlyWorkerModel
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+
+{
+    <div class="row">
+        <div class="col-md-3 offset-1">
+            <p>
+                <!-- Using Html helper method to create the label. -->
+                @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+            </p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.ValidationMessageFor(m => m.FirstName, string.Empty, new { @class = "text-danger" })
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 offset-1">
+            <p>
+                <!-- Using Html helper method to create the label. -->
+                @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+            </p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.ValidationMessageFor(m => m.LastName, string.Empty, new { @class = "text-danger" })
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 offset-1">
+            <p>
+                <!-- Using Html helper method to create the radiobutton. -->
+                <!-- You might also just consider one label, "Worker Type"
+                    with labels for "Regular" and "Senior". -->
+                Hourly Worker:
+                @Html.RadioButtonFor(m => m.IsSalaried, false, new { })
+            </p>
+            <p>
+                <!-- Using Html helper method to create the radiobutton. -->
+                Salaried Worker:
+                @Html.RadioButtonFor(m => m.IsSalaried, true, new { @checked = "checked" })
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 offset-1">
+            <p>
+                <!-- Using Html helper method to create the label. -->
+                @Html.LabelFor(m => m.Rate, new { @class = "control-label" })
+            </p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.TextBoxFor(m => m.Rate, new { @class = "form-control" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.ValidationMessageFor(m => m.Rate, string.Empty, new { @class = "text-danger" })
+                <!-- The following label to display an error message shouldn't be necessary in your Lab 4;
+                    it is necessitated by the validation differences between HourlyWorkers and SalariedWorkers in this example. -->
+                @Html.Label(Model.ErrorMessage, Model.ErrorMessage, new { @class = "text-danger" })
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 offset-1">
+            <p>
+                <!-- Using Html helper method to create the label. -->
+                @Html.LabelFor(m => m.Hours, new { @class = "control-label" })
+            </p>
+        </div>
+        <div class="col-md-3">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.TextBoxFor(m => m.Hours, new { @class = "form-control" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+                <!-- Using Html helper method to create the textbox. -->
+                @Html.ValidationMessageFor(m => m.Hours, string.Empty, new { @class = "text-danger" })
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 offset-1">
+            <p>
+                <!-- This is the calculate button. It's HTML, not an HtmlHelper method. -->
+                <input class="btn btn-primary" type="submit" name="Index" value="Calculate" />
+            </p>
+        </div>
+        <div class="col-md-3 offset-1">
+            <p>
+                <!-- This is the clear button, a styled link. -->
+                @Html.ActionLink("Clear", "Index", "Home", new { @class = "btn btn-secondary" })
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 offset-2">
+            <!-- Here, a razor statement is used to only display pay if a valid worker calculation has taken place. -->
+            @if (Model.Pay > 0)
+            {
+                <p>
+                    <!-- Display the last worker's pay (only if a valid calculation has happened). -->
+                    Last Worker's Pay:
+                    @Model.Pay.ToString("c")
+                </p>
+            }
+            <p>
+                <!-- Display the total number of workers -->
+                Total Workers:
+                @Model.TotalWorkers
+            </p>
+            <p>
+                <!-- Display the total number of hours worked -->
+                Total Hours:
+                @Model.TotalHours
+            </p>
+            <p>
+                <!-- Display the total number of overtime hours worked -->
+                Total Overtime Hours:
+                @Model.TotalOvertime
+            </p>
+            <p>
+                <!-- Display the total pay among all workers -->
+                Total Pay:
+                @Model.TotalPay.ToString("c")
+            </p>
+            <p>
+                <!-- Display the average pay among all workers -->
+                Average Pay:
+                @Model.AveragePay.ToString("c")
+            </p>
+        </div>
+    </div>
+
+}
